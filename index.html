@@ -4,61 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yale University Work Intake</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Yale University Work Intake Form</h1>
+            <div class="logo-container">
+                <img src="https://www.yale.edu/sites/default/files/styles/panopoly_image_original/public/yale_mark_2_color.png?itok=zYODbttr" alt="Yale Logo" class="yale-logo">
+            </div>
+            <h1>Yale University Work Intake</h1>
+            <p class="header-subtitle">Submit your project request</p>
         </header>
         
-        <form id="intakeForm">
-            <div class="form-group">
-                <label for="projectTitle">Project Title</label>
-                <input type="text" id="projectTitle" name="projectTitle" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="priority">Project Priority</label>
-                <select id="priority" name="priority" required>
-                    <option value="">Select Priority</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="sponsor">Sponsor</label>
-                <input type="text" id="sponsor" name="sponsor" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="businessNeed">Business Need</label>
-                <textarea id="businessNeed" name="businessNeed" rows="4" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="timeline">Timeline Expectations</label>
-                <input type="text" id="timeline" name="timeline" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="stakeholders">Stakeholders</label>
-                <textarea id="stakeholders" name="stakeholders" rows="4" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <button type="submit" id="submitBtn">Submit</button>
-            </div>
-        </form>
+        <div class="form-container">
+            <form id="intakeForm">
+                <div class="form-section">
+                    <h2>Project Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title <span class="required">*</span></label>
+                        <input type="text" id="projectTitle" name="projectTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="priority">Project Priority <span class="required">*</span></label>
+                        <div class="custom-select">
+                            <select id="priority" name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sponsor">Sponsor <span class="required">*</span></label>
+                        <input type="text" id="sponsor" name="sponsor" required>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Project Details</h2>
+                    
+                    <div class="form-group">
+                        <label for="businessNeed">Business Need <span class="required">*</span></label>
+                        <textarea id="businessNeed" name="businessNeed" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group timeline-group">
+                        <label for="timelineStart">Timeline Expectations <span class="required">*</span></label>
+                        <div class="date-range-container">
+                            <div class="date-input-group">
+                                <label for="timelineStart" class="sublabel">Start Date</label>
+                                <input type="text" id="timelineStart" name="timelineStart" class="date-picker" placeholder="Select start date" required>
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="date-input-group">
+                                <label for="timelineEnd" class="sublabel">End Date</label>
+                                <input type="text" id="timelineEnd" name="timelineEnd" class="date-picker" placeholder="Select end date" required>
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="stakeholders">Stakeholders <span class="required">*</span></label>
+                        <textarea id="stakeholders" name="stakeholders" rows="4" placeholder="Enter stakeholder names, one per line" required></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="resetBtn" class="secondary-btn">Reset</button>
+                    <button type="submit" id="submitBtn">Submit Request</button>
+                </div>
+            </form>
+        </div>
         
         <div id="submissionList" class="hidden">
             <h2>Submitted Requests</h2>
+            <div class="filter-container">
+                <label for="statusFilter">Filter by status:</label>
+                <select id="statusFilter">
+                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
             <div id="requestsList"></div>
         </div>
     </div>
     
+    <!-- Modal for confirmation -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Request Submitted</h2>
+            <p>Your work request has been submitted successfully!</p>
+            <button id="viewSubmissionsBtn" class="modal-btn">View Submissions</button>
+            <button id="newRequestBtn" class="modal-btn secondary">New Request</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="script.js"></script>
 </body>
 </html>
